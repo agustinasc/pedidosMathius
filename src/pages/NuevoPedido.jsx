@@ -129,7 +129,8 @@ export default function NuevoPedido() {
             />
           </div>
 
-          {/* Detalle de productos */}
+          {/*---------------------- Detalle de productos -------------------------*/}
+
           <div>
             <label className="text-sm font-medium text-gray-700 mb-2 block">Productos</label>
             <div className="flex flex-col gap-2">
@@ -156,14 +157,26 @@ export default function NuevoPedido() {
                       </button>
                     )}
                   </div>
-                  <input
-                    type="number"
-                    value={linea.cantidad}
-                    onChange={(e) => actualizarLinea(index, 'cantidad', e.target.value)}
-                    placeholder="Cantidad"
-                    className="w-full border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-amber-400"
-                    min="1"
-                  />
+                  <div className="flex gap-2">
+                    <input
+                      type="number"
+                      value={linea.cantidad}
+                      onChange={(e) => actualizarLinea(index, 'cantidad', e.target.value)}
+                      placeholder="Cantidad"
+                      className="flex-1 border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-amber-400"
+                      min="1"
+                    />
+                    <select
+                      value={linea.unidad || ''}
+                      onChange={(e) => actualizarLinea(index, 'unidad', e.target.value)}
+                      className="border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-amber-400"
+                    >
+                      {/* <option value="">Unidad</option> */}
+                      <option value="Kg">Kg</option>
+                      <option value="Unidad">Unidad</option>
+                      <option value="Lata">Lata</option>
+                    </select>
+                  </div>
                 </div>
               ))}
             </div>
