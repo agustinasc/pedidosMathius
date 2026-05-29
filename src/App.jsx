@@ -18,19 +18,23 @@ function ProtectedRoute({ children, soloAdmin = false }) {
   const [perfil, setPerfil] = useState(undefined)
 
   useEffect(() => {
-    supabase.auth.getSession().then(async ({ data: { session } }) => {
+    const cargarSesionYPerfil = async () => {
+      const { data: { session } } = await supabase.auth.getSession()
       setSession(session)
+
       if (session) {
         const { data } = await supabase
           .from('perfiles')
           .select('*')
           .eq('id', session.user.id)
           .single()
-        setPerfil(data)
+        setPerfil(data || null)
       } else {
         setPerfil(null)
       }
-    })
+    }
+
+    cargarSesionYPerfil()
 
     const { data: { subscription } } = supabase.auth.onAuthStateChange(async (_event, session) => {
       setSession(session)
@@ -40,7 +44,7 @@ function ProtectedRoute({ children, soloAdmin = false }) {
           .select('*')
           .eq('id', session.user.id)
           .single()
-        setPerfil(data)
+        setPerfil(data || null)
       } else {
         setPerfil(null)
       }
@@ -72,8 +76,7 @@ function App() {
         <Route path="/nuevo-pedido" element={<ProtectedRoute><NuevoPedido /></ProtectedRoute>} />
         <Route path="/editar-pedido/:id" element={<ProtectedRoute><EditarPedido /></ProtectedRoute>} />
         <Route path="/orden-produccion" element={<ProtectedRoute><OrdenProduccion /></ProtectedRoute>} />
-        <Route path="/configuracion" element={<ProtectedRoute soloAdmin><Configuracion /></ProtectedRoute>} />
-        <Route path="/clientes" element={<ProtectedRoute><Clientes /></ProtectedRoute>} />
+        <Route path="/configuracion" element={<ProtectedRoute><Configuracion /></ProtectedRoute>} />        <Route path="/clientes" element={<ProtectedRoute><Clientes /></ProtectedRoute>} />
         <Route path="/productos" element={<ProtectedRoute soloAdmin><Productos /></ProtectedRoute>} />
         <Route path="/usuarios" element={<ProtectedRoute soloAdmin><Usuarios /></ProtectedRoute>} />
       </Routes>

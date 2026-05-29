@@ -86,14 +86,12 @@ export default function Pedidos() {
           >
             + Nuevo Pedido
           </button>
-            {perfil?.rol === 'admin' && (
-              <button
-                onClick={() => navigate('/configuracion')}
-                className="bg-amber-800 hover:bg-amber-900 text-white font-semibold px-4 py-1.5 rounded-lg text-sm transition"
-              >
-                ⚙️
-              </button>
-            )}
+          <button
+            onClick={() => navigate('/configuracion')}
+            className="bg-amber-800 hover:bg-amber-900 text-white font-semibold px-4 py-1.5 rounded-lg text-sm transition"
+          >
+            ⚙️
+          </button>
           <button
             onClick={handleLogout}
             className="text-amber-200 hover:text-white text-sm"

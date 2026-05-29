@@ -1,7 +1,11 @@
 import { useNavigate } from 'react-router-dom'
+import { useContext } from 'react'
+import { UserContext } from '../App'
 
 export default function Configuracion() {
   const navigate = useNavigate()
+  
+  const perfil = useContext(UserContext)
 
   return (
     <div className="min-h-screen bg-amber-50">
@@ -35,13 +39,15 @@ export default function Configuracion() {
 
         {/* -------- boton de usuarios ------- */}
 
-        <button
-          onClick={() => navigate('/usuarios')}
-          className="bg-white rounded-2xl shadow-sm p-6 text-left hover:shadow-md transition border border-amber-100"
-        >
-          <h2 className="text-lg font-bold text-amber-800">👤 Usuarios</h2>
-          <p className="text-gray-500 text-sm mt-1">Agregar y eliminar vendedores</p>
-        </button>
+        {perfil?.rol === 'admin' && (
+          <button
+            onClick={() => navigate('/usuarios')}
+            className="bg-white rounded-2xl shadow-sm p-6 text-left hover:shadow-md transition border border-amber-100"
+          >
+            <h2 className="text-lg font-bold text-amber-800">👤 Usuarios</h2>
+            <p className="text-gray-500 text-sm mt-1">Agregar y eliminar vendedores</p>
+          </button>
+        )}
       </div>
     </div>
   )
